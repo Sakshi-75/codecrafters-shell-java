@@ -29,6 +29,7 @@ public class Main {
                 break;
             if (cmd.startsWith("echo ")) {
                 System.out.println(cmd.replace("echo ", ""));
+                continue;
             } else if (cmd.startsWith("type ")) {
                 String val = cmd.substring(5).trim();
                 if(builtin.contains(val)) {
