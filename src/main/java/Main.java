@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class Main {
                         System.out.println(val + ": not found");
                 }
             } else if (cmd.equals("pwd")) {
-                System.out.println(System.getenv("PATH"));
+                System.out.println(Paths.get("").toAbsolutePath());
             } else {
                 String[] input = cmd.split(" ");
                 if(executablePath(input[0])!=null) {
