@@ -16,7 +16,7 @@ public class Main {
             } else if (cmd.startsWith("type ")) {
                 String val = cmd.substring(5).trim();
                 if(builtin.contains(val)) {
-                    System.out.println(val+"  is a shell builtin");
+                    System.out.println(val+" is a shell builtin");
                 }
                 else {
                     System.out.println(val + ": not found");
