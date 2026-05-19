@@ -9,7 +9,12 @@ public class Main {
             String cmd = scanner.nextLine();
             if("exit".equals(cmd))
                 break;
-            System.out.println(cmd + ": command not found");
+            else if (cmd.startsWith("echo ")) {
+                String val = cmd.replace("echo ", "");
+                System.out.println(val);
+            }
+            else
+                System.out.println(cmd + ": command not found");
         }
     }
 }
