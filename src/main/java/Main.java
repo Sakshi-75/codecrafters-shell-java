@@ -29,19 +29,16 @@ public class Main {
                 break;
             if (cmd.startsWith("echo ")) {
                 System.out.println(cmd.replace("echo ", ""));
-                continue;
             } else if (cmd.startsWith("type ")) {
                 String val = cmd.substring(5).trim();
                 if(builtin.contains(val)) {
                     System.out.println(val+" is a shell builtin");
-                    continue;
                 } else {
                     String result = executablePath(val);
                     if(result!=null)
                         System.out.println(val+" is "+result);
                     else
                         System.out.println(val + ": not found");
-                    continue;
                 }
             } else {
                 String[] input = cmd.split(" ");
@@ -54,10 +51,10 @@ public class Main {
                         System.out.println(line);
                     }
                     process.waitFor();
-                    continue;
                 }
+                else
+                    System.out.println(cmd + ": command not found");
             }
-                System.out.println(cmd + ": command not found");
         }
     }
 }
