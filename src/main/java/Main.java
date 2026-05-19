@@ -1,7 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.Arrays;
+import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -46,7 +46,13 @@ public class Main {
                 if(executablePath(input[0])!=null) {
                     input[0] = executablePath(input[0]);
                     ProcessBuilder processBuilder = new ProcessBuilder(input);
-                    System.out.println(processBuilder.start().getInputStream());
+                    Process process = processBuilder.start();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                    process.waitFor();
                     continue;
                 }
             }
