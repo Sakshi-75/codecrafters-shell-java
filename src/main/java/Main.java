@@ -21,16 +21,10 @@ public class Main {
                 String val = cmd.substring(5).trim();
                 if(builtin.contains(val)) {
                     System.out.println(val+" is a shell builtin");
-                    continue;
                 } else {
                     String[] dirs = System.getenv("PATH").split(File.pathSeparator);
-                    StringBuilder p = new StringBuilder();
                     boolean flag = false;
                     for(String dir: dirs) {
-                        if(!p.isEmpty())
-                            p.append("/").append(dir);
-                        else
-                            p.append(dir);
                         String temp = dir+File.separator+val;
                         File file = new File(temp);
                         if (file.canExecute()) {
