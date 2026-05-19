@@ -46,8 +46,8 @@ public class Main {
                 if(executablePath(input[0])!=null) {
                     input[0] = executablePath(input[0]);
                     ProcessBuilder processBuilder = new ProcessBuilder(input);
-                    processBuilder.start();
-
+                    System.out.println(processBuilder.start().getOutputStream());
+                    continue;
                 }
             }
                 System.out.println(cmd + ": command not found");
