@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -45,6 +46,7 @@ public class Main {
                 String[] input = cmd.split(" ");
                 if(executablePath(input[0])!=null) {
                     ProcessBuilder processBuilder = new ProcessBuilder(executablePath(input[0]));
+                    processBuilder.command(Arrays.stream(input).skip(1L).toList());
                     processBuilder.start();
 
                 }
