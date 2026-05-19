@@ -45,7 +45,8 @@ public class Main {
             } else {
                 String[] input = cmd.split(" ");
                 if(executablePath(input[0])!=null) {
-                    ProcessBuilder processBuilder = new ProcessBuilder(executablePath(input[0]), Arrays.toString(Arrays.copyOfRange(input, 1, input.length)));
+                    input[0] = executablePath(input[0]);
+                    ProcessBuilder processBuilder = new ProcessBuilder(input);
                     processBuilder.start();
 
                 }
