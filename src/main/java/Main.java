@@ -10,8 +10,7 @@ public class Main {
             if("exit".equals(cmd))
                 break;
             else if (cmd.startsWith("echo ")) {
-                String val = cmd.replace("echo ", "");
-                System.out.println(val);
+                System.out.println(cmd.replace("echo ", ""));
             }
             else
                 System.out.println(cmd + ": command not found");
