@@ -45,11 +45,7 @@ public class Main {
                 if(executablePath(input[0])!=null) {
                     ProcessBuilder processBuilder = new ProcessBuilder(input);
                     Process process = processBuilder.start();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
-                    }
+                    process.getInputStream().transferTo(System.out);
                     process.waitFor();
                 }
                 else
