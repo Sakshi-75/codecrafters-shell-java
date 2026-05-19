@@ -23,12 +23,9 @@ public class Main {
                     System.out.println(val+" is a shell builtin");
                     continue;
                 } else {
-                    Path path = Paths.get("");
-                    String currentPath = path.toAbsolutePath().toString();
-                    String sep = path.getFileSystem().getSeparator();
-                    String[] dirs = currentPath.split("\\"+sep);
+                    String[] dirs = System.getenv("PATH").split(File.pathSeparator);
                     StringBuilder p = new StringBuilder();
-                    Boolean flag = false;
+                    boolean flag = false;
                     for(String dir: dirs) {
                         if(!p.isEmpty())
                             p.append("/").append(dir);
