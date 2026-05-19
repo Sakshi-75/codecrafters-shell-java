@@ -31,7 +31,7 @@ public class Main {
                             p.append("/").append(dir);
                         else
                             p.append(dir);
-                        String temp = dir+File.pathSeparator+val;
+                        String temp = dir+File.separator+val;
                         File file = new File(temp);
                         if (file.canExecute()) {
                            System.out.println(val+" is "+file.getPath());
