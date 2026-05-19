@@ -46,7 +46,7 @@ public class Main {
                 if(executablePath(input[0])!=null) {
                     input[0] = executablePath(input[0]);
                     ProcessBuilder processBuilder = new ProcessBuilder(input);
-                    System.out.println(processBuilder.start().getOutputStream());
+                    System.out.println(processBuilder.start().getOutputStream().toString());
                     continue;
                 }
             }
