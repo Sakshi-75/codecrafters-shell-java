@@ -33,6 +33,7 @@ public class Main {
                 String val = cmd.substring(5).trim();
                 if(builtin.contains(val)) {
                     System.out.println(val+" is a shell builtin");
+                    continue;
                 } else {
                     String result = executablePath(val);
                     if(result!=null)
