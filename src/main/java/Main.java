@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // TODO: Uncomment the code below to pass the first stage
         Scanner scanner = new Scanner(System.in);
-        List<String> builtin = List.of("echo", "exit", "type");
+        List<String> builtin = List.of("echo", "exit", "type", "pwd");
         while(true) {
             System.out.print("$ ");
             String cmd = scanner.nextLine();
@@ -40,6 +40,8 @@ public class Main {
                     else
                         System.out.println(val + ": not found");
                 }
+            } else if (cmd.equals("pwd")) {
+                System.out.println(System.getenv("PATH"));
             } else {
                 String[] input = cmd.split(" ");
                 if(executablePath(input[0])!=null) {
