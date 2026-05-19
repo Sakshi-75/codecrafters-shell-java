@@ -10,7 +10,6 @@ public class Main {
         String[] dirs = System.getenv("PATH").split(File.pathSeparator);
         for(String dir: dirs) {
             String temp = dir+File.separator+val;
-            System.out.println(temp);
             File file = new File(temp);
             if (file.canExecute()) {
                 return (file.getPath());
@@ -45,8 +44,7 @@ public class Main {
             } else {
                 String[] input = cmd.split(" ");
                 if(executablePath(input[0])!=null) {
-                    ProcessBuilder processBuilder = new ProcessBuilder(executablePath(input[0]));
-                    processBuilder.command(Arrays.stream(input).skip(1L).toList());
+                    ProcessBuilder processBuilder = new ProcessBuilder(executablePath(input[0]), Arrays.stream(input).skip(1L).toString());
                     processBuilder.start();
 
                 }
