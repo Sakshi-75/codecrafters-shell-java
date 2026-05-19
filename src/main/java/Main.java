@@ -12,7 +12,7 @@ public class Main {
             String temp = dir+File.separator+val;
             File file = new File(temp);
             if (file.canExecute()) {
-                return (file.getPath());
+                return (file.getAbsolutePath());
             }
         }
         return null;
