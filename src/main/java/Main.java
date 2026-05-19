@@ -10,7 +10,6 @@ public class Main {
         String[] dirs = System.getenv("PATH").split(File.pathSeparator);
         for(String dir: dirs) {
             String temp = dir+File.separator+val;
-            System.out.println(temp);
             File file = new File(temp);
             if (file.canExecute()) {
                 return (file.getPath());
