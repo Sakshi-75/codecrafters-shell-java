@@ -12,7 +12,7 @@ public class Main {
             String temp = dir+File.separator+val;
             File file = new File(temp);
             if (file.canExecute()) {
-                return (file.getAbsolutePath());
+                return (file.getPath());
             }
         }
         return null;
@@ -44,7 +44,6 @@ public class Main {
             } else {
                 String[] input = cmd.split(" ");
                 if(executablePath(input[0])!=null) {
-                    input[0] = executablePath(input[0]);
                     ProcessBuilder processBuilder = new ProcessBuilder(input);
                     Process process = processBuilder.start();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
