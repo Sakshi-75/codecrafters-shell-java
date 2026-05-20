@@ -22,11 +22,11 @@ public class Main {
             } else if (cmd.startsWith("type ")) {
                 executeTypeCommand(cmd);
             } else if ("pwd".equals(cmd)) {
-                System.out.println(Paths.get("").toAbsolutePath());
+                System.out.println(System.getProperty("user.dir"));
             } else if (cmd.startsWith("cd ")) {
                 String newPath = cmd.split(" ")[1];
                 if(Files.exists(Path.of(newPath))) {
-                    //System.out.println("Path exists");
+                    System.setProperty("user.dir", newPath);
                 }
                 else
                     System.out.println("cd: "+newPath+": No such file or directory");
