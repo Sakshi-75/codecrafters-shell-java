@@ -26,7 +26,7 @@ public class Main {
             } else if (cmd.startsWith("cd ")) {
                 String newPath = cmd.split(" ")[1];
                 if(Files.exists(Path.of(newPath))) {
-                    System.out.println("Path exists");
+                    //System.out.println("Path exists");
                 }
                 else
                     System.out.println("cd: "+newPath+": No such file or directory");
