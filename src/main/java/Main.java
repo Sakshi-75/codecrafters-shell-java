@@ -25,7 +25,6 @@ public class Main {
                 System.out.println(Paths.get("").toAbsolutePath());
             } else if (cmd.startsWith("cd ")) {
                 String newPath = cmd.split(" ")[1];
-                System.out.println(newPath);
                 if(Files.exists(Path.of(newPath))) {
                     System.out.println("Path exists");
                 }
