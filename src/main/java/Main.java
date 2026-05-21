@@ -1,7 +1,5 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.List;
 import java.util.Scanner;
@@ -25,16 +23,9 @@ public class Main {
                 System.out.println(System.getProperty("user.dir"));
             } else if (cmd.startsWith("cd ")) {
                 String newPath = cmd.split(" ")[1];
-                Path path = Path.of(newPath);
-                Path other = path.toRealPath();
-//                Path currentPath = Path.of(System.getProperty("user.dir"));
-//                Path another = path.resolve(currentPath);
-//                System.out.println(other.isAbsolute());
-//                System.out.println("Other path: "+ other);
-//                System.out.println("Another path: " + another);
-//                System.out.println(currentPath.resolve(other));
-                if(Files.exists(other)) {
-                    System.setProperty("user.dir", other.toString());
+                Path otherPath = getNewPath(Path.of(newPath));
+                if(Files.exists(otherPath)) {
+                    System.setProperty("user.dir", otherPath.toString());
                 }
                 else
                     System.out.println("cd: "+newPath+": No such file or directory");
@@ -46,6 +37,13 @@ public class Main {
                     System.out.println(cmd + ": command not found");
             }
         }
+    }
+
+    private static Path getNewPath(Path other) {
+        if(other.isAbsolute())
+            return other;
+        Path currentPath = Path.of(System.getProperty("user.dir"));
+        return currentPath.resolve(other).normalize();
     }
 
     private static void executeTypeCommand(String cmd) {
