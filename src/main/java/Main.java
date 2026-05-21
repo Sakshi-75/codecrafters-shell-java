@@ -23,7 +23,11 @@ public class Main {
                 System.out.println(System.getProperty("user.dir"));
             } else if (cmd.startsWith("cd ")) {
                 String newPath = cmd.split(" ")[1];
-                Path otherPath = getNewPath(Path.of(newPath));
+                Path otherPath;
+                if("~".equals(newPath))
+                    otherPath = Path.of(System.getProperty("user.home"));
+                else
+                    otherPath = getNewPath(Path.of(newPath));
                 if(Files.exists(otherPath)) {
                     System.setProperty("user.dir", otherPath.toString());
                 }
