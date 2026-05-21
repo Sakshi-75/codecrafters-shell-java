@@ -25,13 +25,16 @@ public class Main {
                 System.out.println(System.getProperty("user.dir"));
             } else if (cmd.startsWith("cd ")) {
                 String newPath = cmd.split(" ")[1];
-                Path other = Path.of(newPath);
+                Path path = Path.of(newPath);
+                Path other = path.toRealPath();
 //                Path currentPath = Path.of(System.getProperty("user.dir"));
+//                Path another = path.resolve(currentPath);
 //                System.out.println(other.isAbsolute());
-//                System.out.println("Absolute path: "+ other.toRealPath());
+//                System.out.println("Other path: "+ other);
+//                System.out.println("Another path: " + another);
 //                System.out.println(currentPath.resolve(other));
                 if(Files.exists(other)) {
-                    System.setProperty("user.dir", other.toRealPath().toString());
+                    System.setProperty("user.dir", other.toString());
                 }
                 else
                     System.out.println("cd: "+newPath+": No such file or directory");
