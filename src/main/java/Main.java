@@ -25,7 +25,7 @@ public class Main {
                 String newPath = cmd.split(" ")[1];
                 Path otherPath;
                 if("~".equals(newPath))
-                    otherPath = Path.of(System.getProperty("user.home"));
+                    otherPath = Path.of(System.getenv("HOME"));
                 else
                     otherPath = getNewPath(Path.of(newPath));
                 if(Files.exists(otherPath)) {
