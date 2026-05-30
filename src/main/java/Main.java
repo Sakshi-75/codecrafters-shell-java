@@ -1,11 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Main {
 
@@ -16,41 +12,46 @@ public class Main {
         while(true) {
             System.out.print("$ ");
             String cmd = scanner.nextLine();
-            if("exit".equals(cmd))
-                break;
-            if (cmd.startsWith("echo ")) {
-                String echo = cmd.replace("echo ", "");
-                if (echo.contains("'")) {
-                    System.out.println(echo.substring(echo.indexOf("'")+1, echo.lastIndexOf("'")));
-                }else {
-                    Object[] message = Arrays.stream(echo.split(" ")).filter(s -> !s.isBlank()).toArray();
-                    StringBuilder finalMessage = new StringBuilder();
-                    Arrays.stream(message).forEach(s -> finalMessage.append(s.toString()).append(" "));
-                    System.out.println(finalMessage);
-                }
-            } else if (cmd.startsWith("type ")) {
-                executeTypeCommand(cmd);
-            } else if ("pwd".equals(cmd)) {
-                System.out.println(System.getProperty("user.dir"));
-            } else if (cmd.startsWith("cd ")) {
-                String newPath = cmd.split(" ")[1];
-                Path otherPath;
-                if("~".equals(newPath))
-                    otherPath = Path.of(System.getenv("HOME"));
-                else
-                    otherPath = getNewPath(Path.of(newPath));
-                if(Files.exists(otherPath)) {
-                    System.setProperty("user.dir", otherPath.toString());
-                }
-                else
-                    System.out.println("cd: "+newPath+": No such file or directory");
-            } else {
-                String[] input = cmd.split(" ");
-                if(executablePath(input[0])!=null)
-                    executeCustomCommand(input);
-                else
-                    System.out.println(cmd + ": command not found");
+            List<String> input = parseInput(cmd);
+            switch (input.getFirst()) {
+                case "exit": return;
+                case "pwd": System.out.println(System.getProperty("user.dir")); break;
+                case "type": executeTypeCommand(cmd); break;
+                case "echo": executeEchoCommand(cmd); break;
+                case "cd": executeCDCommand(cmd); break;
             }
+
+            if(executablePath(input.getFirst())!=null)
+                executeCustomCommand(input);
+            else
+                System.out.println(cmd + ": command not found");
+        }
+    }
+
+    private static void executeCDCommand(String cmd) {
+        String newPath = cmd.split(" ")[1];
+        Path otherPath;
+        if("~".equals(newPath))
+            otherPath = Path.of(System.getenv("HOME"));
+        else
+            otherPath = getNewPath(Path.of(newPath));
+        if(Files.exists(otherPath)) {
+            System.setProperty("user.dir", otherPath.toString());
+        }
+        else
+            System.out.println("cd: "+newPath+": No such file or directory");
+    }
+
+    private static void executeEchoCommand(String cmd) {
+        String echo = cmd.replace("echo ", "");
+
+        if (echo.contains("'")) {
+            System.out.println(echo.substring(echo.indexOf("'")+1, echo.lastIndexOf("'")));
+        }else {
+            Object[] message = Arrays.stream(echo.split(" ")).filter(s -> !s.isBlank()).toArray();
+            StringBuilder finalMessage = new StringBuilder();
+            Arrays.stream(message).forEach(s -> finalMessage.append(s.toString()).append(" "));
+            System.out.println(finalMessage);
         }
     }
 
@@ -86,10 +87,32 @@ public class Main {
         return null;
     }
 
-    private static void executeCustomCommand(String[] input) throws IOException, InterruptedException {
+    private static void executeCustomCommand(List<String> input) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder(input);
         Process process = processBuilder.start();
         process.getInputStream().transferTo(System.out);
         process.waitFor();
+    }
+
+    private static List<String> parseInput(String input) {
+        List<String> args = new ArrayList<>();
+        StringBuilder currentArg = new StringBuilder();
+        boolean insideSingleQuote = false;
+        for (char c : input.toCharArray()) {
+            if (c == '\'') {
+                insideSingleQuote = !insideSingleQuote;
+            } else if (c == ' ' && !insideSingleQuote) {
+                if (!currentArg.isEmpty()) {
+                    args.add(currentArg.toString());
+                    currentArg = new StringBuilder();
+                }
+            } else {
+                currentArg.append(c);
+            }
+        }
+        if (!currentArg.isEmpty()) {
+            args.add(currentArg.toString());
+        }
+        return args;
     }
 }
