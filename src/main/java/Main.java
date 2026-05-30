@@ -17,14 +17,15 @@ public class Main {
                 case "exit": return;
                 case "pwd": System.out.println(System.getProperty("user.dir")); break;
                 case "type": executeTypeCommand(cmd); break;
-                case "echo": executeEchoCommand(cmd); break;
+                case "echo": executeEchoCommand(input.subList(1, input.size())); break;
                 case "cd": executeCDCommand(cmd); break;
+                default: {
+                    if(executablePath(input.getFirst())!=null)
+                        executeCustomCommand(input);
+                    else
+                        System.out.println(cmd + ": command not found");
+                }
             }
-
-            if(executablePath(input.getFirst())!=null)
-                executeCustomCommand(input);
-            else
-                System.out.println(cmd + ": command not found");
         }
     }
 
@@ -42,17 +43,18 @@ public class Main {
             System.out.println("cd: "+newPath+": No such file or directory");
     }
 
-    private static void executeEchoCommand(String cmd) {
-        String echo = cmd.replace("echo ", "");
-
-        if (echo.contains("'")) {
-            System.out.println(echo.substring(echo.indexOf("'")+1, echo.lastIndexOf("'")));
-        }else {
-            Object[] message = Arrays.stream(echo.split(" ")).filter(s -> !s.isBlank()).toArray();
-            StringBuilder finalMessage = new StringBuilder();
-            Arrays.stream(message).forEach(s -> finalMessage.append(s.toString()).append(" "));
-            System.out.println(finalMessage);
-        }
+    private static void executeEchoCommand(List<String> cmd) {
+        System.out.println(String.join(" ", cmd));
+//        String echo = cmd.replace("echo ", "");
+//
+//        if (echo.contains("'")) {
+//            System.out.println(echo.substring(echo.indexOf("'")+1, echo.lastIndexOf("'")));
+//        }else {
+//            Object[] message = Arrays.stream(echo.split(" ")).filter(s -> !s.isBlank()).toArray();
+//            StringBuilder finalMessage = new StringBuilder();
+//            Arrays.stream(message).forEach(s -> finalMessage.append(s.toString()).append(" "));
+//            System.out.println(finalMessage);
+//        }
     }
 
     private static Path getNewPath(Path other) {
