@@ -16,7 +16,11 @@ public class Main {
             if("exit".equals(cmd))
                 break;
             if (cmd.startsWith("echo ")) {
-                System.out.println(cmd.replace("echo ", ""));
+                String echo = cmd.replace("echo ", "");
+                if (echo.contains("'")) {
+                    System.out.println(echo.substring(echo.indexOf("'")+1, echo.lastIndexOf("'")));
+                }else
+                    System.out.println(echo.trim());
             } else if (cmd.startsWith("type ")) {
                 executeTypeCommand(cmd);
             } else if ("pwd".equals(cmd)) {
