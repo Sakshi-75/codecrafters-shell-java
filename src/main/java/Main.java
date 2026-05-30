@@ -1,8 +1,11 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -19,8 +22,12 @@ public class Main {
                 String echo = cmd.replace("echo ", "");
                 if (echo.contains("'")) {
                     System.out.println(echo.substring(echo.indexOf("'")+1, echo.lastIndexOf("'")));
-                }else
-                    System.out.println(echo.trim());
+                }else {
+                    Object[] message = Arrays.stream(echo.split(" ")).filter(s -> !s.isBlank()).toArray();
+                    StringBuilder finalMessage = new StringBuilder();
+                    Arrays.stream(message).forEach(s -> finalMessage.append(s.toString()).append(" "));
+                    System.out.println(finalMessage);
+                }
             } else if (cmd.startsWith("type ")) {
                 executeTypeCommand(cmd);
             } else if ("pwd".equals(cmd)) {
